@@ -1127,7 +1127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5326167736747440894
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1735,8 +1735,9 @@ GameObject:
   - component: {fileID: 637214817375775616}
   - component: {fileID: 3548895201740733035}
   - component: {fileID: 7380270176301576207}
-  - component: {fileID: 1515515743}
-  - component: {fileID: 1515515744}
+  - component: {fileID: 1009230769}
+  - component: {fileID: 1009230775}
+  - component: {fileID: 1009230776}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1814,7 +1815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752d77e24d00af046bc932fd00865900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1515515743
+--- !u!114 &1009230769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1829,9 +1830,10 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 119
-  snapTolerance: 1.5
-  isBuilding: 0
---- !u!114 &1515515744
+  foundationPreview: {fileID: 8131762220474208390, guid: 5c298e3f0914afd4eba5bad1644385db, type: 3}
+  wallPreview: {fileID: 5155345171177824469, guid: 135d5d8f7f4d67a40acc3d0661f5a3f0, type: 3}
+  celingPreview: {fileID: 1515341117853670961, guid: a5135086111f5db478f3b96e4576a45e, type: 3}
+--- !u!114 &1009230775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1840,13 +1842,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2255377229922816265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69aa79aaa1c29f948a7307cf1614403f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b4259aeed3144442855ed37b4310a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foundationPreview: {fileID: 8131762220474208390, guid: 5c298e3f0914afd4eba5bad1644385db, type: 3}
-  wallPreview: {fileID: 5155345171177824469, guid: 135d5d8f7f4d67a40acc3d0661f5a3f0, type: 3}
-  celingPreview: {fileID: 1515341117853670961, guid: a5135086111f5db478f3b96e4576a45e, type: 3}
-  buildSystem: {fileID: 1515515743}
+--- !u!114 &1009230776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255377229922816265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8dd6fe36ef08a43b6a9d80b2aba925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2255377229971156992
 GameObject:
   m_ObjectHideFlags: 0
