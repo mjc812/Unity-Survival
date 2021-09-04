@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public interface Item
 {
@@ -5,6 +6,7 @@ public interface Item
 
     string Description { get; }
 
-    void PickUp();
     void Use();
+    void PickUp();
+    Sprite Sprite { get; }
 }

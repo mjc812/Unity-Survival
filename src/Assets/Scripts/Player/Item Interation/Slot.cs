@@ -8,12 +8,14 @@ using UnityEngine.EventSystems;
 public class Slot : MonoBehaviour, IPointerDownHandler, IPointerClickHandler
 {
     List<Consumable> items = new List<Consumable>();
-    Text slotDisplayAmount;
+    private Text slotDisplayAmount;
+    private Image slotImage;
     private float onPointerDownTime = 0;
 
     private void Awake()
     {
         slotDisplayAmount = transform.GetChild(0).GetComponent<Text>();
+        slotImage = transform.GetComponent<Image>();
     }
 
     public bool AddItem(Consumable consumable)
@@ -22,6 +24,7 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerClickHandler
         {
             items.Add(consumable);
             slotDisplayAmount.text = consumable.Description + " - " + items.Count().ToString();
+            SetSprite(consumable);
             return true;
         } else if (items[0].ID == consumable.ID)
         {
@@ -32,6 +35,12 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerClickHandler
         {
             return false;
         }
+    }
+
+    private void SetSprite(Consumable consumable)
+    {
+        Sprite sprite = consumable.Sprite;
+        slotImage.sprite = sprite;
     }
 
     public void OnPointerDown(PointerEventData pointerEventData)

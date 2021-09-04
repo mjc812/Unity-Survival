@@ -1,21 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Consumable : MonoBehaviour, Item
 {
     private Inventory inventory;
-    protected int IDNumber;
-    protected string DescriptionString;
 
-    public int ID
-    {
-        get => IDNumber;
-    }
-    public string Description
-    {
-        get => DescriptionString;
-    }
+    public abstract int ID { get; }
+    public abstract string Description { get; }
+    public abstract Sprite Sprite { get; }
+
+    public abstract void Use();
 
     public void PickUp()
     {
@@ -24,10 +17,5 @@ public abstract class Consumable : MonoBehaviour, Item
         {
             transform.gameObject.SetActive(false);
         }
-    }
-
-    public void Use()
-    {
-        Debug.Log("consumable used");
     }
 }

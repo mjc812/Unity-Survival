@@ -1,20 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour, Item
 {
     private FPWeaponHolderController weaponHolderController;
-    protected int IDNumber;
-    protected string DescriptionString;
-    public int ID
-    {
-        get => IDNumber;
+    
+    public int ID {
+        get => 0;
     }
 
-    public string Description
+    public string Description {
+        get => "Test Weapon";
+    }
+
+    public Sprite Sprite
     {
-        get => DescriptionString;
+        get => null;
     }
 
     public void PickUp()
@@ -25,6 +25,6 @@ public class Weapon : MonoBehaviour, Item
 
     public void Use()
     {
-        Debug.Log("weapon used");
+        Debug.Log(Description + "used");
     }
 }
