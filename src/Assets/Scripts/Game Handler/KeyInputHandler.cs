@@ -11,6 +11,7 @@ public class KeyInputHandler : MonoBehaviour
 
     void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         playerPickup = GameObject.FindWithTag("Player").GetComponent<PlayerPickup>();
         buildSystem = GameObject.FindWithTag("Player").GetComponent<BuildSystem>();
         weaponHolderController = GameObject.FindWithTag("FPWeaponHolder").GetComponent<FPWeaponHolderController>();
@@ -32,7 +33,6 @@ public class KeyInputHandler : MonoBehaviour
             weaponHolderController.DropItem();
         } else if(Input.GetKeyDown(KeyCode.Tab))
         {
-            Cursor.lockState = CursorLockMode.None; // make this toggle
             inventory.ToggleInventoryDisplay();
         } else if(Input.GetKeyDown(KeyCode.H))
         {
