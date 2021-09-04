@@ -19,6 +19,8 @@ TagManager:
   - WallSnapPoint
   - Foundation_SP
   - Wall_SP
+  - Celing_SP
+  - ItemsContainer
   layers:
   - Default
   - TransparentFX

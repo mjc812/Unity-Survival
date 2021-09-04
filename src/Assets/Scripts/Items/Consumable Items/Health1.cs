@@ -4,7 +4,7 @@ public class Health1 : Consumable
 {
     Sprite spriteToReturn;
 
-    public void Awake()
+    public void Awake()  // look into virtual and move this up to item interface
     {
         Texture2D texure2D = Resources.Load<Texture2D>("Sprites/Items/Consumables/Health1");
         spriteToReturn = Sprite.Create(
