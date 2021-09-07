@@ -21,6 +21,7 @@ TagManager:
   - Wall_SP
   - Celing_SP
   - ItemsContainer
+  - Cannibal
   layers:
   - Default
   - TransparentFX
