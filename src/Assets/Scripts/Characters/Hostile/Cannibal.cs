@@ -20,7 +20,7 @@ public class Cannibal : MonoBehaviour
     private float playerChaseDistance = 10.0f;
     private float playerAttackDistance = 1.0f;
     private float destinationRadiusMin = 20.0f, destinationRadiusMax = 60.0f;
-    private float timeBeforeAttack = 2.0f;
+    private float timeBeforeAttack = 3.0f;
     private float maxWalkTime = 4.0f;
 
     private MovingState movingState = MovingState.WALK;
