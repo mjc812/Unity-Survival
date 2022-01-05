@@ -28,8 +28,9 @@ public class Health2 : Consumable
         get => spriteToReturn;
     }
 
-    public override void Use()
+    public override bool Use()
     {
         Debug.Log(Description + "used");
+        return true;
     }
 }

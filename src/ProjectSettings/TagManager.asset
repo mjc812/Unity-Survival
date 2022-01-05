@@ -22,6 +22,9 @@ TagManager:
   - Celing_SP
   - ItemsContainer
   - Cannibal
+  - Crosshair
+  - UI Canvas
+  - UICanvas
   layers:
   - Default
   - TransparentFX

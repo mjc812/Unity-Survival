@@ -6,7 +6,7 @@ public interface Item
 
     string Description { get; }
 
-    void Use();
+    bool Use();
     void PickUp();
     Sprite Sprite { get; }
 }

@@ -8,7 +8,7 @@ public abstract class Consumable : MonoBehaviour, Item
     public abstract string Description { get; }
     public abstract Sprite Sprite { get; }
 
-    public abstract void Use();
+    public abstract bool Use();
 
     public void PickUp()
     {

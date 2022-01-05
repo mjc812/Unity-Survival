@@ -17,11 +17,11 @@ public class Cannibal : MonoBehaviour
 
     private float walkSpeed = 1.0f;
     private float chaseSpeed = 4.0f;
-    private float playerChaseDistance = 10.0f;
+    private float playerChaseDistance = 1.0f;
     private float playerAttackDistance = 1.0f;
-    private float destinationRadiusMin = 20.0f, destinationRadiusMax = 60.0f;
+    private float destinationRadiusMin = 100.0f, destinationRadiusMax = 200.0f;
     private float timeBeforeAttack = 3.0f;
-    private float maxWalkTime = 4.0f;
+    private float maxWalkTime = 15.0f;
 
     private MovingState movingState = MovingState.WALK;
     private float totalWalkTime = 4.0f;
@@ -111,7 +111,6 @@ public class Cannibal : MonoBehaviour
         if (totalBeforeAttackTime > timeBeforeAttack)
         {
             totalBeforeAttackTime = 0.0f;
-            Debug.Log("Attacking");
             animator.Play("Attack");
         }
         else if (!CheckAttackDistance())

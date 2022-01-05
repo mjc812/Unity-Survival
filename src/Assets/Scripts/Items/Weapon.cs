@@ -3,7 +3,8 @@ using UnityEngine;
 public class Weapon : MonoBehaviour, Item
 {
     private FPWeaponHolderController weaponHolderController;
-    
+    private Animator animator;
+
     public int ID {
         get => 0;
     }
@@ -23,8 +24,9 @@ public class Weapon : MonoBehaviour, Item
         weaponHolderController.HoldItem(this);
     }
 
-    public void Use()
+    public bool Use()
     {
         Debug.Log(Description + "used");
+        return true;
     }
 }

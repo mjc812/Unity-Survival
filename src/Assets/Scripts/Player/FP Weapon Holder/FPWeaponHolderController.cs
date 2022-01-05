@@ -6,6 +6,21 @@ using UnityEngine;
 public class FPWeaponHolderController : MonoBehaviour
 {
     private Weapon item = null;
+    private Animator animator;
+
+    //make private later
+    public float positionX = 0.2f;
+    public float positionY = -0.35f;
+    public float positionZ = 0.9f;
+
+    public float rotationX = 0f;
+    public float rotationY = -182f;
+    public float rotationZ = 0f;
+
+    void Start()
+    {
+        animator = transform.GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -31,16 +46,26 @@ public class FPWeaponHolderController : MonoBehaviour
         item = weapon;
         Transform itemTransform = weapon.transform;
         itemTransform.parent = transform;
-        itemTransform.localPosition = new Vector3(0.5f, -0.35f, 0.7f);
-        itemTransform.localRotation = Quaternion.Euler(0f, -175f, 0f);
+        itemTransform.localPosition = new Vector3(positionX, positionY, positionZ);
+        itemTransform.localRotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
         itemTransform.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    public void NotUsingItem()
+    {
+        //animator.SetBool("Fire", false);
     }
 
     public void UseItem()
     {
         if (item)
         {
-            item.Use();
+            bool used = item.Use();
+            if (used)
+            {
+                animator.SetTrigger("TestFire");
+                //animator.SetBool("Fire", true);
+            }
         }
     }
 }
