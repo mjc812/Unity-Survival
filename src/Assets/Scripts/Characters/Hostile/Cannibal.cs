@@ -16,23 +16,26 @@ public class Cannibal : MonoBehaviour
     private Transform player;
 
     private float walkSpeed = 1.0f;
-    private float chaseSpeed = 4.0f;
-    private float playerChaseDistance = 1.0f;
-    private float playerAttackDistance = 1.0f;
+    private float maxWalkTime = 10.0f;
+    private float totalWalkTime = 10.0f;
     private float destinationRadiusMin = 100.0f, destinationRadiusMax = 200.0f;
+
+    private float chaseSpeed = 5.0f;
+    private float playerChaseDistance = 15.0f;
+
+    private float playerAttackDistance = 1.2f;
     private float timeBeforeAttack = 3.0f;
-    private float maxWalkTime = 15.0f;
+    private float totalBeforeAttackTime = 3.0f;
+
+    public float rotationSpeed = 10f;
 
     private MovingState movingState = MovingState.WALK;
-    private float totalWalkTime = 4.0f;
-    private float totalBeforeAttackTime = 0.0f;
-
+   
     void Awake()
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
-        Debug.Log(player);
     }
 
     void Update()
@@ -91,6 +94,8 @@ public class Cannibal : MonoBehaviour
         navMeshAgent.SetDestination(player.position);
         navMeshAgent.speed = chaseSpeed;
         animator.Play("Chase");
+        RotateTowards();
+
         if (!CheckChaseDistance())
         {
             movingState = MovingState.WALK;
@@ -104,10 +109,12 @@ public class Cannibal : MonoBehaviour
 
     private void Attack()
     {
+        navMeshAgent.velocity = Vector3.zero;
         navMeshAgent.isStopped = true;
-
         totalBeforeAttackTime += Time.deltaTime;
+        RotateTowards();
 
+        Debug.Log(totalBeforeAttackTime);
         if (totalBeforeAttackTime > timeBeforeAttack)
         {
             totalBeforeAttackTime = 0.0f;
@@ -115,6 +122,7 @@ public class Cannibal : MonoBehaviour
         }
         else if (!CheckAttackDistance())
         {
+            totalBeforeAttackTime = timeBeforeAttack;
             movingState = MovingState.CHASE;
         }
     }
@@ -131,7 +139,14 @@ public class Cannibal : MonoBehaviour
         return dist <= playerChaseDistance;
     }
 
-    private NavMeshHit GetNavMeshDestination()
+    private void RotateTowards()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
+        private NavMeshHit GetNavMeshDestination()
     {
         float destinationRadius = Random.Range(
             destinationRadiusMin,

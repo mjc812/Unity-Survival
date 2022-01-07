@@ -7,6 +7,8 @@ public class FPWeaponHolderController : MonoBehaviour
 {
     private Weapon item = null;
     private Animator animator;
+    private Recoil mainCameraRecoil;
+    private Transform swayHandler;
 
     //make private later
     public float positionX = 0.2f;
@@ -19,6 +21,8 @@ public class FPWeaponHolderController : MonoBehaviour
 
     void Start()
     {
+        swayHandler = this.gameObject.transform.GetChild(0);
+        mainCameraRecoil = GameObject.FindWithTag("MainCamera").GetComponent<Recoil>();
         animator = transform.GetComponent<Animator>();
     }
 
@@ -45,27 +49,19 @@ public class FPWeaponHolderController : MonoBehaviour
         DropItem();
         item = weapon;
         Transform itemTransform = weapon.transform;
-        itemTransform.parent = transform;
+        itemTransform.parent = swayHandler;
         itemTransform.localPosition = new Vector3(positionX, positionY, positionZ);
         itemTransform.localRotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
         itemTransform.gameObject.GetComponent<Rigidbody>().isKinematic = true;
     }
 
-    public void NotUsingItem()
-    {
-        //animator.SetBool("Fire", false);
-    }
-
     public void UseItem()
     {
-        if (item)
+        if (item && item.Use())
         {
-            bool used = item.Use();
-            if (used)
-            {
-                animator.SetTrigger("TestFire");
-                //animator.SetBool("Fire", true);
-            }
+            mainCameraRecoil.RecoilEffect();
+            int randomAnimationNumber = UnityEngine.Random.Range(0, 3);
+            animator.SetTrigger("Fire" + randomAnimationNumber);
         }
     }
 }

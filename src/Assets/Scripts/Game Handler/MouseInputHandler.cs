@@ -34,10 +34,6 @@ public class MouseInputHandler : MonoBehaviour
         {
             weaponHolder.UseItem();
         }
-        if (Input.GetMouseButtonUp(0))
-        {
-            weaponHolder.NotUsingItem();
-        }
         if (Input.GetMouseButtonDown(1))
         {
             aimSystem.AimIn();

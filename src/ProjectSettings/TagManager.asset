@@ -25,6 +25,12 @@ TagManager:
   - Crosshair
   - UI Canvas
   - UICanvas
+  - RecoilHandler
+  - MainCameraRecoil
+  - Fire
+  - GenericMuzzleFlash
+  - GenericFlare
+  - FPWeaponSway
   layers:
   - Default
   - TransparentFX
