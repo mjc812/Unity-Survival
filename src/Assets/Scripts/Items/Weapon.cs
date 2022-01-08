@@ -5,6 +5,7 @@ public class Weapon : MonoBehaviour, Item
     private FPWeaponHolderController weaponHolderController;
     private ParticleSystem flashParticleSystem;
     private AudioSource audioSource;
+    private BoxCollider boxCollider;
 
     //eventually move to object pool. Do not want to reference prefabs in random places everywhere, should only be done through object pool handlers
     public GameObject spark;
@@ -30,6 +31,7 @@ public class Weapon : MonoBehaviour, Item
     void Start()
     {
         nextTimeToFire = 0;
+        boxCollider = transform.GetComponent<BoxCollider>();
         audioSource = transform.GetComponent<AudioSource>();
         Transform muzzleFlash = gameObject.transform.Find("MuzzleFlash");
         Transform flare = muzzleFlash.Find("Flash");
@@ -38,8 +40,15 @@ public class Weapon : MonoBehaviour, Item
 
     public void PickUp()
     {
+        boxCollider.enabled = false;
         weaponHolderController = GameObject.FindWithTag("FPWeaponHolder").GetComponent<FPWeaponHolderController>();
         weaponHolderController.HoldItem(this);
+
+    }
+
+    public void Drop()
+    {
+        boxCollider.enabled = true;
     }
 
     public bool Use()
@@ -48,8 +57,7 @@ public class Weapon : MonoBehaviour, Item
         {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 80f))
             {
-                GameObject spark2 = Instantiate(spark, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(spark2, 0.5f);
+                RaycastTargetHit(hit);
             }
             audioSource.PlayOneShot(fire, 1f);
             nextTimeToFire = Time.time + 1f / fireRate;
@@ -59,5 +67,15 @@ public class Weapon : MonoBehaviour, Item
         {
             return false;
         }
+    }
+
+    private void RaycastTargetHit(RaycastHit hit)
+    {
+        if (hit.transform.tag == "Cannibal")
+        {
+            hit.transform.GetComponent<Health>().ApplyDamage(25f);
+        }
+        GameObject spark2 = Instantiate(spark, hit.point, Quaternion.LookRotation(hit.normal));
+        Destroy(spark2, 0.5f);
     }
 }

@@ -8,5 +8,6 @@ public interface Item
 
     bool Use();
     void PickUp();
+    void Drop();
     Sprite Sprite { get; }
 }

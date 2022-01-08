@@ -18,4 +18,9 @@ public abstract class Consumable : MonoBehaviour, Item
             transform.gameObject.SetActive(false);
         }
     }
+
+    public void Drop()
+    {
+        Debug.Log("Nothing");
+    }
 }
