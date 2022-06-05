@@ -5,6 +5,7 @@ public enum MovingState
 {
     IDLE,
     WALK,
+    WALKTOATTACK,
     CHASE,
     ATTACK
 }
@@ -18,12 +19,14 @@ public class Cannibal : MonoBehaviour
     private CannibalHealth cannibalHealth;
 
     private float walkSpeed = 1.0f;
+    private float walkToAttackSpeed = 2.0f;
     private float maxWalkTime = 10.0f;
     private float totalWalkTime = 10.0f;
     private float destinationRadiusMin = 100.0f, destinationRadiusMax = 200.0f;
 
     private float chaseSpeed = 5.0f;
     private float playerChaseDistance = 15.0f;
+    private float playerChaseFromAttactDistance = 4.0f;
 
     private float playerAttackDistance = 1.2f;
     private float timeBeforeAttack = 3.0f;
@@ -43,11 +46,17 @@ public class Cannibal : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(movingState);
         switch (movingState)
         {
             case MovingState.WALK:
                 {
                     Walk();
+                    break;
+                }
+            case MovingState.WALKTOATTACK:
+                {
+                    WalkToAttack();
                     break;
                 }
             case MovingState.CHASE:
@@ -78,7 +87,12 @@ public class Cannibal : MonoBehaviour
         movingState = MovingState.WALK;
         totalWalkTime += Time.deltaTime;
         navMeshAgent.speed = walkSpeed;
-        animator.Play("Walk");
+
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+        {
+            animator.Play("Walk");
+        }
+        //animator.Play("Walk");
 
         if (CheckChaseDistance())
         {
@@ -95,12 +109,40 @@ public class Cannibal : MonoBehaviour
         }
     }
 
+    private void WalkToAttack()
+    {
+        navMeshAgent.isStopped = false;
+        movingState = MovingState.WALKTOATTACK;
+        navMeshAgent.SetDestination(player.position);
+        navMeshAgent.speed = walkToAttackSpeed;
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+        {
+            animator.Play("Walk");
+        }
+        //animator.Play("Walk");
+        RotateTowardsPlayer();
+        if (!CheckChaseFromAttackDistance())
+        {
+            movingState = MovingState.CHASE;
+        }
+        else if (CheckAttackDistance())
+        {
+            totalBeforeAttackTime = timeBeforeAttack + 1;
+            movingState = MovingState.ATTACK;
+        }
+    }
+
     private void Chase()
     {
         navMeshAgent.isStopped = false;
         navMeshAgent.SetDestination(player.position);
         navMeshAgent.speed = chaseSpeed;
-        animator.Play("Chase");
+
+
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Chase"))
+        {
+            animator.Play("Chase");
+        }
         RotateTowardsPlayer();
 
         if (!CheckChaseDistance())
@@ -110,6 +152,7 @@ public class Cannibal : MonoBehaviour
         }
         else if (CheckAttackDistance())
         {
+            totalBeforeAttackTime = timeBeforeAttack + 1;
             movingState = MovingState.ATTACK;
         }
     }
@@ -121,15 +164,15 @@ public class Cannibal : MonoBehaviour
         totalBeforeAttackTime += Time.deltaTime;
         RotateTowardsPlayer();
 
-        if (totalBeforeAttackTime > timeBeforeAttack)
+        if (totalBeforeAttackTime >= timeBeforeAttack)
         {
             totalBeforeAttackTime = 0.0f;
-            animator.Play("Attack");
+            animator.SetTrigger("Punch Left");
         }
         else if (!CheckAttackDistance())
         {
             totalBeforeAttackTime = timeBeforeAttack;
-            movingState = MovingState.CHASE;
+            movingState = MovingState.WALKTOATTACK;
         }
     }
 
@@ -143,6 +186,12 @@ public class Cannibal : MonoBehaviour
     {
         float dist = Vector3.Distance(player.position, transform.position);
         return dist <= playerChaseDistance;
+    }
+
+    private bool CheckChaseFromAttackDistance()
+    {
+        float dist = Vector3.Distance(player.position, transform.position);
+        return dist <= playerChaseFromAttactDistance;
     }
 
     //understand

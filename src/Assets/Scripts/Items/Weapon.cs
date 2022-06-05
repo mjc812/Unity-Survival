@@ -43,12 +43,13 @@ public class Weapon : MonoBehaviour, Item
         boxCollider.enabled = false;
         weaponHolderController = GameObject.FindWithTag("FPWeaponHolder").GetComponent<FPWeaponHolderController>();
         weaponHolderController.HoldItem(this);
-
+        SetChildrenWithTag(transform, "FP");
     }
 
     public void Drop()
     {
         boxCollider.enabled = true;
+        SetChildrenWithTag(transform, "Default");
     }
 
     public bool Use()
@@ -77,5 +78,16 @@ public class Weapon : MonoBehaviour, Item
         }
         GameObject spark2 = Instantiate(spark, hit.point, Quaternion.LookRotation(hit.normal));
         Destroy(spark2, 0.5f);
+    }
+
+    private void SetChildrenWithTag(Transform parent, string tag)
+    {
+        Debug.Log("settign tags to fp");
+        foreach (Transform child in parent)
+        {
+            Debug.Log(LayerMask.NameToLayer(tag));
+            child.gameObject.layer = LayerMask.NameToLayer(tag);
+            SetChildrenWithTag(child, tag);
+        }
     }
 }

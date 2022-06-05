@@ -15,7 +15,7 @@ public class BuildSystem : MonoBehaviour {
     private float snapTolerance = 0.1f;
 
     private bool building = false;
-    private bool pauseBuilding = false;
+    //private bool pauseBuilding = false;
     private float mouseXAcc = 0;
     private float mouseYAcc = 0;
 

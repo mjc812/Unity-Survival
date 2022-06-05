@@ -7,6 +7,7 @@ public class SwayHandler : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("sway");
         float xMouse = Input.GetAxisRaw("Mouse X");
         float yMouse = Input.GetAxisRaw("Mouse Y");
 
