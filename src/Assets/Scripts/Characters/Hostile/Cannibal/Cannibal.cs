@@ -46,7 +46,8 @@ public class Cannibal : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(movingState);
+        //Debug.Log(movingState);
+        //in branch
         switch (movingState)
         {
             case MovingState.WALK:
