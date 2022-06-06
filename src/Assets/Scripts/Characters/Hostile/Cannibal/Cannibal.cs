@@ -12,6 +12,7 @@ public enum MovingState
 
 public class Cannibal : MonoBehaviour
 {
+    //comments here
     private Animator animator;
     private NavMeshAgent navMeshAgent;
     private Transform player;
